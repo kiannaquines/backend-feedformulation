@@ -29,7 +29,7 @@ python -m venv env
 # Command Prompt:
 .\env\Scripts\activate.bat
 
-# Gitbash
+# Git Bash:
 source ./env/Scripts/activate
 ```
 
