@@ -1,9 +1,3 @@
-# FastAPI with Alembic Setup (Windows)
-
-This guide shows how to set up and run a FastAPI app with Alembic database migrations on Windows.
-
----
-
 ## Prerequisites
 
 - Python 3.8+ or latest
