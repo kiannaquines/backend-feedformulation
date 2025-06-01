@@ -6,7 +6,7 @@ This guide shows how to set up and run a FastAPI app with Alembic database migra
 
 ## Prerequisites
 
-- Python 3.8+
+- Python 3.8+ or latest
 - Windows PowerShell or Command Prompt
 - Virtual environment (recommended)
 - SQLite
@@ -20,8 +20,8 @@ This guide shows how to set up and run a FastAPI app with Alembic database migra
 Open PowerShell or Command Prompt and run:
 
 ```powershell
+
 python -m venv env
-# Activate virtual environment:
 
 # PowerShell:
 .\env\Scripts\Activate.ps1
@@ -31,3 +31,15 @@ python -m venv env
 
 # Gitbash
 source ./env/Scripts/activate
+```
+
+```powershell
+# Install required dependencies
+pip install -r requirements.txt
+
+# Run the fastapi
+fastapi dev main.py
+
+# Access Local API Route
+http://127.0.0.1:8000/docs
+```
