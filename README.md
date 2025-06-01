@@ -33,6 +33,8 @@ python -m venv env
 source ./env/Scripts/activate
 ```
 
+Install required dependencies and run the api
+
 ```powershell
 # Install required dependencies
 pip install -r requirements.txt
