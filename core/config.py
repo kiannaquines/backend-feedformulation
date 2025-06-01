@@ -1,0 +1,10 @@
+import hashlib
+
+DATABASE_PATH = "app_database.db"
+JWT_SECRET_KEY = hashlib.sha256(b"feed_formulation_secret_key_1234567890").hexdigest()
+JWT_ALGORITHM = "HS256"
+JWT_EXPIRATION_HOURS = 24
+NEXT_OTP_INTERVAL = 60
+TOP_MAX_DIGIT = 6
+OTP_IS_ENABLED = False
+OTP_SESSION_EXPIRATION_MINUTES = 10
