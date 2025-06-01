@@ -4,7 +4,7 @@ from db.database import *
 from schema.schema import *
 
 from routes.authentication_routes import auth_router
-from routes.dist.feed_formulation_routes import feed_formulation_router
+from routes.feed_formulation_routes import feed_formulation_router
 from routes.root_routes import root_router
 from routes.ingredient_routes import ingredient_router
 from routes.nutrient_requirements_routes import nutrient_requirements_router
