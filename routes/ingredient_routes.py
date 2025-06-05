@@ -31,7 +31,7 @@ def get_specific_ingredient(ingredient_id: int, db: Session = Depends(get_db), a
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ingredient not found")
     return ingredient
 
-@ingredient_router.post("/ingredients/create", response_model=IngredientResponse, status_code=status.HTTP_200_OK)
+@ingredient_router.post("/ingredients/create", response_model=IngredientResponse, status_code=status.HTTP_201_CREATED)
 def create_ingredient(ingredients: IngredientCreate, db: Session = Depends(get_db), auth_user: dict = Depends(verify_jwt_token)):
 
     existing = db.query(Ingredient).filter(Ingredient.name == ingredients.name).first()
