@@ -4,6 +4,7 @@
 - Windows PowerShell or Command Prompt
 - Virtual environment (recommended)
 - SQLite
+- Docker (Optional)
 
 ---
 
@@ -38,4 +39,12 @@ fastapi dev main.py
 
 # Access Local API Route
 http://127.0.0.1:8000/docs
+```
+
+
+# Docker 
+
+```powershell
+docker build -t fastapi-feed-formulation-app .
+docker run -d -p 8000:8000 fastapi-feed-formulation-app
 ```
