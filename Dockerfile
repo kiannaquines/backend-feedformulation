@@ -1,7 +1,7 @@
 # Developed by: Kian Naquines
 # Description: This Dockerfile sets up a FastAPI application environment.
 # Date: 23/06/2025
-# Version: 1.0
+# Version: 1.0 beta
 # Usage: Build the Docker image with `fastapi-feed-formulation-app`
 
 # Dockerfile for a FastAPI application
