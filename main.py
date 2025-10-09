@@ -17,9 +17,6 @@ app = FastAPI(
         "name": "Kian Naquines",
         "email": "kjgnaquines@usm.edu.ph"
     },
-    docs_url=None,
-    redoc_url=None,
-    openapi_url=None,
 )
 
 app.add_middleware(
