@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed Formulation System - Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'farm-green': '#2d5f3f',
+                        'farm-light': '#84a98c',
+                        'farm-accent': '#52796f',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-green-50 via-blue-50 to-green-50 min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+        <!-- Hero Section -->
+        <div class="text-center mb-16">
+            <div class="bg-farm-green text-white rounded-3xl w-24 h-24 flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                </svg>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+                Feed Formulation System
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
+                Optimize livestock feed nutrition and costs with scientific precision
+            </p>
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <a 
+                    href="quick-start.html"
+                    class="bg-white text-farm-green px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all border-2 border-farm-green"
+                >
+                    📖 Quick Start Guide
+                </a>
+                <a 
+                    href="index.html"
+                    class="bg-farm-green text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-farm-accent hover:shadow-2xl transition-all"
+                >
+                    🚀 Launch Application
+                </a>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition-all">
+                <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Smart Optimization</h3>
+                <p class="text-gray-600">Advanced linear programming algorithms find the most cost-effective feed mix while meeting all nutritional requirements</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition-all">
+                <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Easy to Use</h3>
+                <p class="text-gray-600">Intuitive interface designed specifically for farmers and animal nutritionists with no technical expertise required</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition-all">
+                <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Data-Driven</h3>
+                <p class="text-gray-600">Track ingredients, save formulations, and analyze costs over time to make informed decisions</p>
+            </div>
+        </div>
+
+        <!-- Key Benefits -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Why Choose Our System?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="bg-farm-green text-white rounded-lg p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-1">Cost Reduction</h4>
+                        <p class="text-gray-600">Minimize feed costs while maintaining optimal nutrition for your livestock</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="bg-farm-green text-white rounded-lg p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-1">Scientific Accuracy</h4>
+                        <p class="text-gray-600">Based on proven linear programming algorithms used by professional nutritionists</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="bg-farm-green text-white rounded-lg p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-1">Time Savings</h4>
+                        <p class="text-gray-600">Calculate optimal formulations in seconds instead of hours of manual work</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="bg-farm-green text-white rounded-lg p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-1">Flexible & Customizable</h4>
+                        <p class="text-gray-600">Adapt to any livestock type, age group, or production stage with custom profiles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="bg-gradient-to-r from-farm-green to-farm-accent rounded-2xl shadow-xl p-8 md:p-12 text-white mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center">How It Works</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                        1
+                    </div>
+                    <h4 class="font-bold mb-2">Add Ingredients</h4>
+                    <p class="text-sm text-green-100">Input your available feed ingredients with their nutritional values and prices</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                        2
+                    </div>
+                    <h4 class="font-bold mb-2">Set Requirements</h4>
+                    <p class="text-sm text-green-100">Define the nutritional targets for your specific livestock needs</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                        3
+                    </div>
+                    <h4 class="font-bold mb-2">Calculate</h4>
+                    <p class="text-sm text-green-100">Let the system find the optimal mix that minimizes cost while meeting all requirements</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                        4
+                    </div>
+                    <h4 class="font-bold mb-2">Use & Save</h4>
+                    <p class="text-sm text-green-100">Implement the formulation and save it for future reference or adjustment</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Optimize Your Feed?</h2>
+            <p class="text-xl text-gray-600 mb-8">Join farmers and scientists using data-driven nutrition</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a 
+                    href="quick-start.html"
+                    class="bg-white text-farm-green px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all border-2 border-farm-green inline-flex items-center"
+                >
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    Read Guide
+                </a>
+                <a 
+                    href="index.html"
+                    class="bg-farm-green text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-farm-accent hover:shadow-2xl transition-all inline-flex items-center"
+                >
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Get Started
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-16 pt-8 border-t border-gray-200 text-center text-gray-500">
+            <p class="mb-2">© 2025 Feed Formulation System</p>
+            <p class="text-sm">Designed for farmers and scientists • Built with modern technology</p>
+        </div>
+    </div>
+</body>
+</html>

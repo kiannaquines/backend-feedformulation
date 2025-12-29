@@ -6,6 +6,7 @@ from schema.schema import UserRegister, UserLogin, OTPVerification
 from core.authentication import hash_password, verify_password, create_jwt_token
 from core.otp import generate_otp, verify_otp
 from core.authentication import generate_otp_secret
+from core.email import send_otp_email, send_welcome_email
 from datetime import datetime, timedelta
 import secrets
 from core.config import OTP_SESSION_EXPIRATION_MINUTES, JWT_EXPIRATION_HOURS, OTP_IS_ENABLED
@@ -38,9 +39,12 @@ def register_user(user_data: UserRegister, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(user)
 
+    # Send welcome email
+    email_sent = send_welcome_email(user.email, user.username)
+
     return {
         "message": "User registered successfully",
-        "note": "Save your OTP secret securely. You'll need it for login verification."
+        "note": "Welcome email sent to your email address" if email_sent else "Registration successful"
     }
 
 @auth_router.post("/auth/login")
@@ -86,12 +90,23 @@ def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
 
     current_otp = generate_otp(user.otp_secret)
 
+    # Send OTP to user's email
+    email_sent = send_otp_email(user.email, current_otp, user.username)
+
+    if not email_sent:
+        # Clean up session if email failed
+        db.delete(otp_session)
+        db.commit()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to send OTP email. Please try again or contact support."
+        )
+
     return {
-        "message": "Login successful. Please verify OTP to complete authentication.",
+        "message": "Login successful. OTP sent to your email address.",
         "session_token": session_token,
-        "current_otp": current_otp,
         "expires_in_minutes": OTP_SESSION_EXPIRATION_MINUTES,
-        "note": "Use the OTP with your session token to get your JWT token"
+        "note": f"Please check {user.email} for your verification code"
     }
 
 @auth_router.post("/auth/verify-otp")
