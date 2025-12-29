@@ -50,8 +50,25 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Header -->
         <div class="bg-gradient-to-r from-farm-green to-farm-accent rounded-2xl shadow-xl p-8 mb-8 text-white">
-            <h1 class="text-4xl font-bold mb-2">Create Feed Formulation</h1>
-            <p class="text-green-100 text-lg">Design an optimal feed mix for your livestock</p>
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">Create Feed Formulation</h1>
+                    <p class="text-green-100 text-lg">Design an optimal feed mix for your livestock</p>
+                </div>
+                <div id="aiStatusIndicator" class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-4 py-3 flex items-center gap-3">
+                    <div class="flex items-center gap-2">
+                        <div id="aiStatusDot" class="w-3 h-3 rounded-full bg-gray-400 animate-pulse"></div>
+                        <span id="aiStatusText" class="text-sm font-medium">Checking AI...</span>
+                    </div>
+                    <button 
+                        id="testAiBtn" 
+                        class="text-xs bg-white bg-opacity-30 hover:bg-opacity-50 px-3 py-1 rounded transition-colors"
+                        title="Test AI Connection"
+                    >
+                        Test
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Alert Message -->
@@ -70,49 +87,72 @@
                         <h2 class="text-2xl font-bold text-gray-900">Nutrient Requirements</h2>
                     </div>
 
+                    <!-- Nutrient Profile Selection -->
+                    <div class="mb-6 bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <label class="block text-sm font-medium text-blue-900 mb-2">
+                            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Select Nutrient Profile (Quick Fill)
+                        </label>
+                        <select 
+                            id="nutrientProfileSelect"
+                            class="w-full px-4 py-3 border-2 border-blue-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-farm-green bg-white"
+                        >
+                            <option value="">-- Select a nutrient profile or enter manually below --</option>
+                        </select>
+                        <p class="text-xs text-blue-700 mt-2">
+                            Choose a saved nutrient profile to automatically fill the requirements, or enter values manually
+                        </p>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Protein (%)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Protein (%) *</label>
                             <input 
                                 type="number" 
                                 id="proteinRequirement"
-                                step="0.1"
+                                step="any"
                                 min="0"
+                                required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                                placeholder="e.g., 18.0"
+                                placeholder="e.g., 18.5 or 20.75"
                             >
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Energy ME (Mcal/kg)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Energy ME (Mcal/kg) *</label>
                             <input 
                                 type="number" 
                                 id="energyRequirement"
-                                step="0.1"
+                                step="any"
                                 min="0"
+                                required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                                placeholder="e.g., 3.0"
+                                placeholder="e.g., 3.0 or 2.85"
                             >
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Calcium (%)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Calcium (%) *</label>
                             <input 
                                 type="number" 
                                 id="calciumRequirement"
-                                step="0.01"
+                                step="any"
                                 min="0"
+                                required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                                placeholder="e.g., 0.9"
+                                placeholder="e.g., 0.87 or 0.905"
                             >
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Phosphorus (%)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phosphorus (%) *</label>
                             <input 
                                 type="number" 
                                 id="phosphorusRequirement"
-                                step="0.01"
+                                step="any"
                                 min="0"
+                                required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                                placeholder="e.g., 0.45"
+                                placeholder="e.g., 0.45 or 0.425"
                             >
                         </div>
                     </div>
@@ -127,12 +167,95 @@
                             </div>
                             <h2 class="text-2xl font-bold text-gray-900">Select Ingredients</h2>
                         </div>
-                        <button 
-                            id="addIngredientBtn"
-                            class="bg-farm-green text-white px-4 py-2 rounded-lg hover:bg-farm-accent transition-colors font-medium"
-                        >
-                            + Add Ingredient
-                        </button>
+                        <div class="flex gap-2">
+                            <button 
+                                id="suggestIngredientsBtn"
+                                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                                <span>AI Suggestions</span>
+                                <span class="text-xs bg-purple-500 px-2 py-0.5 rounded-full">Gemini</span>
+                            </button>
+                            <button 
+                                id="addIngredientBtn"
+                                class="bg-farm-green text-white px-4 py-2 rounded-lg hover:bg-farm-accent transition-colors font-medium"
+                            >
+                                + Add Ingredient
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Suggestions Panel -->
+                    <div id="suggestionsPanel" class="hidden mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-gray-900 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                AI-Powered Ingredient Suggestions
+                                <span class="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full">Powered by Google Gemini</span>
+                            </h3>
+                            <button id="closeSuggestionsBtn" class="text-gray-500 hover:text-gray-700">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="suggestionsContent" class="space-y-2">
+                            <!-- Suggestions will be added here -->
+                        </div>
+                    </div>
+
+                    <!-- AI Chat Assistant -->
+                    <div id="chatPanel" class="mb-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-gray-900 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                                </svg>
+                                AI Feed Assistant
+                                <span class="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full">Chat with Gemini</span>
+                            </h3>
+                            <button id="toggleChatBtn" class="text-purple-600 hover:text-purple-800 text-sm font-medium">
+                                Hide
+                            </button>
+                        </div>
+                        
+                        <!-- Chat Messages -->
+                        <div id="chatMessages" class="bg-white rounded-lg p-4 mb-3 h-64 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-purple-300">
+                            <!-- Welcome message -->
+                            <div class="flex items-start gap-2">
+                                <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                                    AI
+                                </div>
+                                <div class="bg-gray-100 rounded-lg px-4 py-2 max-w-[85%]">
+                                    <p class="text-sm text-gray-800">👋 Hi! I'm your AI feed formulation assistant. Ask me to add ingredients or get recommendations!</p>
+                                    <p class="text-xs text-gray-500 mt-1">Try: "Add corn to the formulation" or "What high-protein ingredients do you recommend?"</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Chat Input -->
+                        <div class="flex gap-2">
+                            <input 
+                                type="text" 
+                                id="chatInput" 
+                                placeholder="Type your message... (e.g., 'add soybean meal')"
+                                class="flex-1 px-4 py-2 border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                                maxlength="500"
+                            />
+                            <button 
+                                id="sendChatBtn"
+                                class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-colors font-medium flex items-center gap-2"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                                Send
+                            </button>
+                        </div>
                     </div>
 
                     <div id="ingredientsList" class="space-y-4">
@@ -192,12 +315,46 @@
     <div id="ingredientModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4">
-                <h3 class="text-2xl font-bold text-gray-900">Add Ingredient</h3>
+                <h3 class="text-2xl font-bold text-gray-900">Add Ingredient to Formulation</h3>
             </div>
             
-            <form id="ingredientForm" class="p-6 space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="md:col-span-2">
+            <div class="p-6 space-y-6">
+                <!-- Ingredient Selection Method -->
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h4 class="font-bold text-blue-900 mb-1">Quick Selection</h4>
+                            <p class="text-sm text-blue-800">Select an existing ingredient from your library to auto-fill all nutritional data, or enter manually below.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Select from Database -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Select Existing Ingredient (Optional)
+                    </label>
+                    <select 
+                        id="existingIngredientSelect"
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-farm-green bg-white"
+                    >
+                        <option value="">-- Select an ingredient to auto-fill data --</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">
+                        Selecting an ingredient will pre-fill all fields below with saved data
+                    </p>
+                </div>
+
+                <div class="border-t border-gray-200 pt-4">
+                    <p class="text-sm font-medium text-gray-700 mb-4">Or enter ingredient details manually:</p>
+                </div>
+                
+                <form id="ingredientForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Ingredient Name *</label>
                         <input 
                             type="text" 
@@ -213,11 +370,11 @@
                         <input 
                             type="number" 
                             id="ingredientCost"
-                            step="0.01"
+                            step="any"
                             min="0"
                             required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                            placeholder="e.g., 0.25"
+                            placeholder="e.g., 350.50 or 100.75"
                         >
                     </div>
                     
@@ -226,10 +383,10 @@
                         <input 
                             type="number" 
                             id="ingredientProtein"
-                            step="0.1"
+                            step="any"
                             min="0"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                            placeholder="e.g., 8.0"
+                            placeholder="e.g., 8.5 or 43.75"
                         >
                     </div>
                     
@@ -238,10 +395,10 @@
                         <input 
                             type="number" 
                             id="ingredientEnergy"
-                            step="0.1"
+                            step="any"
                             min="0"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                            placeholder="e.g., 3.3"
+                            placeholder="e.g., 3.3 or 2.85"
                         >
                     </div>
                     
@@ -250,10 +407,10 @@
                         <input 
                             type="number" 
                             id="ingredientCalcium"
-                            step="0.01"
+                            step="any"
                             min="0"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                            placeholder="e.g., 0.03"
+                            placeholder="e.g., 0.03 or 4.68"
                         >
                     </div>
                     
@@ -262,10 +419,10 @@
                         <input 
                             type="number" 
                             id="ingredientPhosphorus"
-                            step="0.01"
+                            step="any"
                             min="0"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                            placeholder="e.g., 0.25"
+                            placeholder="e.g., 0.25 or 2.86"
                         >
                     </div>
                     
@@ -274,12 +431,12 @@
                         <input 
                             type="number" 
                             id="ingredientMin"
-                            step="0.01"
+                            step="any"
                             min="0"
                             max="1"
                             value="0"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                            placeholder="e.g., 0.1"
+                            placeholder="e.g., 0.05 or 0.125"
                         >
                     </div>
                     
@@ -288,16 +445,31 @@
                         <input 
                             type="number" 
                             id="ingredientMax"
-                            step="0.01"
+                            step="any"
                             min="0"
                             max="1"
                             value="1"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-farm-green focus:border-transparent"
-                            placeholder="e.g., 0.6"
+                            placeholder="e.g., 0.6 or 0.75"
                         >
                     </div>
                 </div>
-
+                
+                <!-- Include/Exclude Toggle -->
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1">Include in Formulation</label>
+                            <p class="text-xs text-gray-600">Add this ingredient but exclude it from calculations if needed</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="ingredientIncluded" checked class="sr-only peer">
+                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-600"></div>
+                            <span class="ml-3 text-sm font-medium text-gray-900" id="includeLabel">Included</span>
+                        </label>
+                    </div>
+                </div>
+                
                 <div class="flex space-x-3 pt-4">
                     <button 
                         type="button" 
@@ -310,10 +482,11 @@
                         type="submit"
                         class="flex-1 bg-farm-green text-white py-3 px-4 rounded-lg font-semibold hover:bg-farm-accent transition-colors"
                     >
-                        Add Ingredient
+                        Add to Formulation
                     </button>
                 </div>
             </form>
+            </div>
         </div>
     </div>
 

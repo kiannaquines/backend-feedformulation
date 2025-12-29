@@ -210,6 +210,58 @@ const API = {
             }
             
             return response.json();
+        },
+
+        aiSuggest: async (requirements) => {
+            const response = await fetch(`${API_BASE_URL}/ingredients/ai-suggest`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${getAuthToken()}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requirements),
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw error;
+            }
+            
+            return response.json();
+        },
+
+        aiStatus: async () => {
+            const response = await fetch(`${API_BASE_URL}/ingredients/ai-status`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw error;
+            }
+            
+            return response.json();
+        },
+
+        aiChat: async (chatData) => {
+            const response = await fetch(`${API_BASE_URL}/ingredients/ai-chat`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${getAuthToken()}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(chatData),
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw error;
+            }
+            
+            return response.json();
         }
     },
 
@@ -246,6 +298,58 @@ const API = {
                     user_id: userId,
                     payload: payload
                 }),
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw error;
+            }
+            
+            return response.json();
+        },
+
+        getAll: async () => {
+            const response = await fetch(`${API_BASE_URL}/my/feed/formulation/`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${getAuthToken()}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw error;
+            }
+            
+            return response.json();
+        },
+
+        delete: async (id) => {
+            const response = await fetch(`${API_BASE_URL}/feed/formulation/remove/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${getAuthToken()}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw error;
+            }
+            
+            return response.json();
+        },
+
+        update: async (id, formulationData) => {
+            const response = await fetch(`${API_BASE_URL}/feed/formulation/update/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${getAuthToken()}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formulationData),
             });
             
             if (!response.ok) {

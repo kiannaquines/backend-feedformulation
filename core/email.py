@@ -158,8 +158,21 @@ def send_otp_email(recipient_email: str, otp_code: str, username: str) -> bool:
         
         return True
     
+    except smtplib.SMTPAuthenticationError as e:
+        print(f"❌ Email Authentication Error: {str(e)}")
+        print("━" * 60)
+        print("GMAIL SETUP REQUIRED:")
+        print("1. Enable 2-Step Verification: https://myaccount.google.com/security")
+        print("2. Generate App Password: https://myaccount.google.com/apppasswords")
+        print("3. Update .env with the 16-character App Password")
+        print("4. Restart the server")
+        print()
+        print("See GMAIL_TROUBLESHOOTING.md for detailed instructions")
+        print("━" * 60)
+        return False
     except Exception as e:
-        print(f"Error sending email: {str(e)}")
+        print(f"❌ Error sending email: {str(e)}")
+        print("Check EMAIL_SETUP.md for troubleshooting")
         return False
 
 
@@ -294,6 +307,19 @@ def send_welcome_email(recipient_email: str, username: str) -> bool:
         
         return True
     
+    except smtplib.SMTPAuthenticationError as e:
+        print(f"❌ Email Authentication Error: {str(e)}")
+        print("━" * 60)
+        print("GMAIL SETUP REQUIRED:")
+        print("1. Enable 2-Step Verification: https://myaccount.google.com/security")
+        print("2. Generate App Password: https://myaccount.google.com/apppasswords")
+        print("3. Update .env with the 16-character App Password")
+        print("4. Restart the server")
+        print()
+        print("See GMAIL_TROUBLESHOOTING.md for detailed instructions")
+        print("━" * 60)
+        return False
     except Exception as e:
-        print(f"Error sending welcome email: {str(e)}")
+        print(f"❌ Error sending welcome email: {str(e)}")
+        print("Check EMAIL_SETUP.md for troubleshooting")
         return False

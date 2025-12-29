@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, EmailStr, Json
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 
 class UserRegister(BaseModel):
@@ -28,7 +28,46 @@ class UserResponse(BaseModel):
     username: str
     email: str
     is_active: bool
+
+# AI Suggestion Schemas
+class IngredientSuggestionRequest(BaseModel):
+    protein_percent: float = Field(..., ge=0, description="Required protein percentage")
+    energy_me: float = Field(..., ge=0, description="Required metabolized energy")
+    calcium_percent: float = Field(..., ge=0, description="Required calcium percentage")
+    phosphorus_percent: float = Field(..., ge=0, description="Required phosphorus percentage")
+    excluded_ingredient_names: Optional[List[str]] = Field(default=[], description="List of ingredient names to exclude from suggestions")
+    top_n: Optional[int] = Field(default=5, ge=1, le=10, description="Number of suggestions to return")
+
+class IngredientSuggestionResponse(BaseModel):
+    ingredient_id: int
+    ingredient_name: str
+    match_score: float
+    reasons: List[str]
+    nutritional_info: dict
+    detailed_scores: dict
+
+# AI Chat Schemas
+class AIChatRequest(BaseModel):
+    message: str = Field(..., min_length=1, max_length=500, description="User's message to the AI assistant")
+    protein_percent: Optional[float] = Field(default=0, ge=0, description="Current protein requirement")
+    energy_me: Optional[float] = Field(default=0, ge=0, description="Current energy requirement")
+    calcium_percent: Optional[float] = Field(default=0, ge=0, description="Current calcium requirement")
+    phosphorus_percent: Optional[float] = Field(default=0, ge=0, description="Current phosphorus requirement")
+    selected_ingredient_names: Optional[List[str]] = Field(default=[], description="Currently selected ingredients")
+
+class AIChatResponse(BaseModel):
+    response: str
+    action: Optional[str] = None
+    ingredient_name: Optional[str] = None
+    reasoning: Optional[str] = None
     created_at: str
+
+class AIStatusResponse(BaseModel):
+    status: str
+    message: str
+    api_available: bool
+    model_name: Optional[str] = None
+    test_response: Optional[str] = None
 
 class Ingredient(BaseModel):
     name: str

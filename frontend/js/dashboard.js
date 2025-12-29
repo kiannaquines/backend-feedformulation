@@ -42,9 +42,15 @@ async function loadDashboardStats() {
             document.getElementById('totalNutrients').textContent = '0';
         }
         
-        // Note: Saved formulations endpoint is not available in the provided routes
-        // Setting it to 0 for now
-        document.getElementById('totalFormulations').textContent = '0';
+        // Load saved formulations count
+        try {
+            const formulationsData = await API.formulation.getAll();
+            const formulationsCount = formulationsData.length || 0;
+            document.getElementById('totalFormulations').textContent = formulationsCount;
+        } catch (error) {
+            console.error('Error loading formulations:', error);
+            document.getElementById('totalFormulations').textContent = '0';
+        }
         
     } catch (error) {
         console.error('Error loading dashboard stats:', error);
