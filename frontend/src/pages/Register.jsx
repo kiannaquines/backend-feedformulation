@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { API } from '../api'
-import { Sprout, User, Mail, Lock, Loader2 } from 'lucide-react'
+import { Icon } from '../components/Icon'
 
 export default function Register() {
   const navigate = useNavigate()
@@ -41,7 +41,7 @@ export default function Register() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 16px',
           }}>
-            <Sprout size={32} color="#fff"/>
+            <Icon name="eco" size={32} color="#fff"/>
           </div>
           <h1 style={{ color: '#fff', fontSize: '1.75rem', fontWeight: 800, marginBottom: 6 }}>Create account</h1>
           <p style={{ color: 'rgba(255,255,255,.7)' }}>Start optimizing your feed formulations</p>
@@ -54,10 +54,10 @@ export default function Register() {
 
             <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {[
-                { k:'username', label:'Username',         Icon: User, type:'text',     ph:'e.g., john_doe'       },
-                { k:'email',    label:'Email',            Icon: Mail, type:'email',    ph:'you@example.com'      },
-                { k:'password', label:'Password',         Icon: Lock, type:'password', ph:'Min 8 characters'     },
-                { k:'confirm',  label:'Confirm Password', Icon: Lock, type:'password', ph:'Repeat your password' },
+                { k:'username', label:'Username',         Icon: 'person', type:'text',     ph:'e.g., john_doe'       },
+                { k:'email',    label:'Email',            Icon: 'mail', type:'email',    ph:'you@example.com'      },
+                { k:'password', label:'Password',         Icon: 'lock', type:'password', ph:'Min 8 characters'     },
+                { k:'confirm',  label:'Confirm Password', Icon: 'lock', type:'password', ph:'Repeat your password' },
               ].map(({ k, label, Icon, type, ph }) => (
                 <div className="form-group" key={k}>
                   <label className="form-label">{label}</label>
@@ -73,13 +73,13 @@ export default function Register() {
               ))}
 
               <button className="btn btn-primary btn-full btn-lg" type="submit" disabled={loading || success}>
-                {loading ? <><Loader2 size={18} className="animate-pulse"/>Creating…</> : 'Create Account'}
+                {loading ? <><Icon name="progress_activity" size={18} className="animate-pulse"/>Creating…</> : 'Create Account'}
               </button>
             </form>
 
             <p style={{ textAlign: 'center', marginTop: 20, fontSize: '.875rem', color: 'var(--gray-500)' }}>
               Already have an account?{' '}
-              <Link to="/login" style={{ color: 'var(--farm-green-mid)', fontWeight: 600 }}>Sign in</Link>
+              <Link to="/login" style={{ color: 'var(--text-main)', fontWeight: 600 }}>Sign in</Link>
             </p>
           </div>
         </div>

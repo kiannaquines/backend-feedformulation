@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { API } from '../api'
 import { useToast } from '../components/Toast'
-import { BookMarked, Trash2, ChevronDown, ChevronUp, Loader2, Calendar } from 'lucide-react'
+import { Icon } from '../components/Icon'
 
 export default function SavedFormulations() {
   const { toast, ToastContainer } = useToast()
@@ -36,7 +36,7 @@ export default function SavedFormulations() {
       <ToastContainer/>
       <div className="page-hero" style={{ marginBottom:32 }}>
         <div className="container page-hero-inner">
-          <h1><BookMarked size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Saved Formulations</h1>
+          <h1><Icon name="bookmark" size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Saved Formulations</h1>
           <p style={{ opacity:.8 }}>{list.length} saved formula{list.length!==1?'s':''}</p>
         </div>
       </div>
@@ -48,9 +48,9 @@ export default function SavedFormulations() {
           </div>
         ) : list.length === 0 ? (
           <div className="empty-state">
-            <BookMarked size={48} className="empty-state-icon"/>
+            <Icon name="bookmark" size={48} className="empty-state-icon"/>
             <h3>No saved formulations</h3>
-            <p>Calculate a formulation and hit "Save" to keep it here.</p>
+            <p>Calculate a formulation and hit "'save'" to keep it here.</p>
           </div>
         ) : (
           <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
@@ -71,7 +71,7 @@ export default function SavedFormulations() {
                         </h3>
                         <div style={{ display:'flex', gap:16, flexWrap:'wrap' }}>
                           <span style={{ fontSize:'.8125rem', color:'var(--gray-500)', display:'flex', alignItems:'center', gap:4 }}>
-                            <Calendar size={13}/> {fmt(f.created_at)}
+                            <Icon name="calendar_today" size={13}/> {fmt(f.created_at)}
                           </span>
                           {summary.cost_per_kg !== undefined && (
                             <span className="badge badge-green">₱{parseFloat(summary.cost_per_kg).toFixed(2)}/kg</span>
@@ -86,13 +86,13 @@ export default function SavedFormulations() {
                       </div>
                       <div style={{ display:'flex', gap:8 }}>
                         <button className="btn btn-ghost btn-sm" onClick={() => setExpanded(e=>({...e,[f.id]:!open}))}>
-                          {open ? <ChevronUp size={16}/> : <ChevronDown size={16}/>}
+                          {open ? <Icon name="expand_less" size={16}/> : <Icon name="expand_more" size={16}/>}
                         </button>
                         <button
                           className="btn btn-ghost btn-sm" style={{ color:'var(--red)' }}
                           onClick={() => del(f.id)} disabled={deleting===f.id}
                         >
-                          {deleting===f.id ? <Loader2 size={15} className="animate-pulse"/> : <Trash2 size={15}/>}
+                          {deleting===f.id ? <Icon name="progress_activity" size={15} className="animate-pulse"/> : <Icon name="delete" size={15}/>}
                         </button>
                       </div>
                     </div>
@@ -115,7 +115,7 @@ export default function SavedFormulations() {
                                   <span style={{ fontSize:'.875rem', fontWeight:500 }}>
                                     {i.name}{i.is_locked && ' 🔒'}
                                   </span>
-                                  <span style={{ fontWeight:700, color:'var(--farm-green-mid)', fontSize:'.875rem' }}>
+                                  <span style={{ fontWeight:600, color:'var(--text-main)', fontSize:'.875rem' }}>
                                     {parseFloat(i.percentage).toFixed(2)}%
                                   </span>
                                 </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { API } from '../api'
 import { useToast } from '../components/Toast'
-import { ListChecks, Plus, Edit3, Trash2, X, Loader2, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react'
+import { Icon } from '../components/Icon'
 
 const EMPTY_COMP = { protein_percent: '', energy_me: '', calcium_percent: '', phosphorus_percent: '' }
 const EMPTY = { nutrient_requirement_name: '', nutrient_requirement_description: '', composition: EMPTY_COMP }
@@ -86,11 +86,11 @@ export default function NutrientRequirements() {
         <div className="container page-hero-inner">
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
             <div>
-              <h1><ListChecks size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Nutrient Profiles</h1>
+              <h1><Icon name="checklist" size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Nutrient Profiles</h1>
               <p style={{ opacity:.8 }}>{list.length} profiles configured</p>
             </div>
-            <button className="btn btn-lg" style={{ background:'#fff', color:'var(--farm-green-mid)', fontWeight:700 }} onClick={openAdd}>
-              <Plus size={18}/> New Profile
+            <button className="btn btn-lg" style={{ background:'var(--bg-surface)', color:'var(--text-main)', fontWeight:600 }} onClick={openAdd}>
+              <Icon name="add" size={18}/> New Profile
             </button>
           </div>
         </div>
@@ -103,10 +103,10 @@ export default function NutrientRequirements() {
           </div>
         ) : list.length === 0 ? (
           <div className="empty-state">
-            <ListChecks size={48} className="empty-state-icon"/>
+            <Icon name="checklist" size={48} className="empty-state-icon"/>
             <h3>No nutrient profiles yet</h3>
             <p>Create a profile to quickly fill nutrient targets in the formulation calculator.</p>
-            <button className="btn btn-primary" style={{ marginTop:16 }} onClick={openAdd}><Plus size={16}/> Create Profile</button>
+            <button className="btn btn-primary" style={{ marginTop:16 }} onClick={openAdd}><Icon name="add" size={16}/> Create Profile</button>
           </div>
         ) : (
           <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
@@ -127,10 +127,10 @@ export default function NutrientRequirements() {
                       </div>
                       <div style={{ display:'flex', gap:8 }}>
                         <button className="btn btn-ghost btn-sm" onClick={() => setExpanded(e=>({...e,[nr.id]:!open}))}>
-                          {open ? <ChevronUp size={16}/> : <ChevronDown size={16}/>}
+                          {open ? <Icon name="expand_less" size={16}/> : <Icon name="expand_more" size={16}/>}
                         </button>
-                        <button className="btn btn-ghost btn-sm" onClick={() => openEdit(nr)}><Edit3 size={15}/></button>
-                        <button className="btn btn-ghost btn-sm" style={{color:'var(--red)'}} onClick={() => del(nr)}><Trash2 size={15}/></button>
+                        <button className="btn btn-ghost btn-sm" onClick={() => openEdit(nr)}><Icon name="edit" size={15}/></button>
+                        <button className="btn btn-ghost btn-sm" style={{color:'var(--red)'}} onClick={() => del(nr)}><Icon name="delete" size={15}/></button>
                       </div>
                     </div>
                     {open && (
@@ -139,7 +139,7 @@ export default function NutrientRequirements() {
                           {[['Protein', c.protein_percent, '%'],['Energy ME', c.energy_me, ''],['Calcium', c.calcium_percent, '%'],['Phosphorus', c.phosphorus_percent, '%']].map(([lbl, val, u]) => (
                             <div key={lbl} style={{ background:'var(--gray-50)', borderRadius:12, padding:'14px 16px', border:'1px solid var(--gray-100)' }}>
                               <div style={{ fontSize:'.75rem', color:'var(--gray-400)', fontWeight:600, textTransform:'uppercase', letterSpacing:'.04em', marginBottom:6 }}>{lbl}</div>
-                              <div style={{ fontSize:'1.5rem', fontWeight:800, color:'var(--farm-green-mid)' }}>{val ?? '—'}{u}</div>
+                              <div style={{ fontSize:'1.5rem', fontWeight:600, color:'var(--text-main)', letterSpacing:'-0.02em' }}>{val ?? '—'}{u}</div>
                             </div>
                           ))}
                         </div>
@@ -158,7 +158,7 @@ export default function NutrientRequirements() {
           <div className="modal">
             <div className="modal-header">
               <h3 className="modal-title">{modal==='add' ? 'New Nutrient Profile' : 'Edit Profile'}</h3>
-              <button className="btn btn-ghost btn-sm" onClick={close}><X size={18}/></button>
+              <button className="btn btn-ghost btn-sm" onClick={close}><Icon name="close" size={18}/></button>
             </div>
             <form onSubmit={save}>
               <div className="modal-body" style={{ display:'flex', flexDirection:'column', gap:16 }}>
@@ -185,7 +185,7 @@ export default function NutrientRequirements() {
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={close}>Cancel</button>
                 <button type="submit" className="btn btn-primary" disabled={saving}>
-                  {saving ? <><Loader2 size={16} className="animate-pulse"/>Saving…</> : <><CheckCircle size={16}/>Save</>}
+                  {saving ? <><Icon name="progress_activity" size={16} className="animate-pulse"/>Saving…</> : <><Icon name="check_circle" size={16}/>'save'</>}
                 </button>
               </div>
             </form>

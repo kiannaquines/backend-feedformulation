@@ -1,14 +1,14 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Sprout, LayoutDashboard, FlaskConical, Package, ListChecks, BookMarked, LogOut, Menu, X } from 'lucide-react'
+import { Icon } from './Icon'
 import { useState } from 'react'
 
 const NAV = [
-  { to: '/dashboard',            label: 'Dashboard',       icon: LayoutDashboard },
-  { to: '/formulation',          label: 'Formulation',     icon: FlaskConical    },
-  { to: '/ingredients',          label: 'Ingredients',     icon: Package         },
-  { to: '/nutrient-requirements',label: 'Nutrients',       icon: ListChecks      },
-  { to: '/saved-formulations',   label: 'Saved',           icon: BookMarked      },
+  { to: '/dashboard',            label: 'Dashboard',       icon: 'dashboard' },
+  { to: '/formulation',          label: 'Formulation',     icon: 'science'    },
+  { to: '/ingredients',          label: 'Ingredients',     icon: 'inventory_2'         },
+  { to: '/nutrient-requirements',label: 'Nutrients',       icon: 'checklist'      },
+  { to: '/saved-formulations',   label: 'Saved',           icon: 'bookmark'      },
 ]
 
 export default function Navbar() {
@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="navbar-inner">
           <Link to="/dashboard" className="navbar-brand">
             <div className="navbar-logo">
-              <Sprout size={20} color="#fff" />
+              <Icon name="eco" size={20} color="#fff" />
             </div>
             <span className="navbar-title">FeedForm</span>
           </Link>
@@ -54,10 +54,10 @@ export default function Navbar() {
               {user.username}
             </span>
             <button className="btn btn-ghost btn-sm" onClick={logout} title="Logout">
-              <LogOut size={16} />
+              <Icon name="logout" size={16} />
             </button>
-            <button className="btn btn-ghost btn-sm" onClick={() => setOpen(o => !o)} title="Menu">
-              {open ? <X size={18}/> : <Menu size={18}/>}
+            <button className="btn btn-ghost btn-sm" onClick={() => setOpen(o => !o)} title="'menu'">
+              {open ? <Icon name="close" size={18}/> : <Icon name="menu" size={18}/>}
             </button>
           </div>
         </div>

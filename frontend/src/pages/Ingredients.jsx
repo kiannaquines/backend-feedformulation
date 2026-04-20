@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { API } from '../api'
 import { useToast } from '../components/Toast'
-import { Package, Plus, Search, Edit3, Trash2, X, Loader2, CheckCircle } from 'lucide-react'
+import { Icon } from '../components/Icon'
 
 const EMPTY = {
   name: '', price: '', crude_protein: '', metabolized_energy: '',
@@ -100,22 +100,22 @@ export default function Ingredients() {
         <div className="container page-hero-inner">
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
             <div>
-              <h1><Package size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Ingredients</h1>
+              <h1><Icon name="inventory_2" size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Ingredients</h1>
               <p style={{ opacity:.8 }}>{list.length} ingredients in library</p>
             </div>
-            <button className="btn btn-lg" style={{ background:'#fff', color:'var(--farm-green-mid)', fontWeight:700 }} onClick={openAdd}>
-              <Plus size={18}/> Add Ingredient
+            <button className="btn btn-lg" style={{ background:'var(--bg-surface)', color:'var(--text-main)', fontWeight:600 }} onClick={openAdd}>
+              <Icon name="add" size={18}/> Add Ingredient
             </button>
           </div>
         </div>
       </div>
 
       <div className="container">
-        {/* Search */}
+        {/* 'search' */}
         <div style={{ position:'relative', marginBottom:24 }}>
-          <Search size={16} style={{ position:'absolute', left:14, top:'50%', transform:'translateY(-50%)', color:'var(--gray-400)' }}/>
+          <Icon name="search" size={16} style={{ position:'absolute', left:14, top:'50%', transform:'translateY(-50%)', color:'var(--text-muted)' }}/>
           <input
-            className="form-input" placeholder="Search ingredients…"
+            className="form-input" placeholder="'search' ingredients…"
             value={search} onChange={e => setSearch(e.target.value)}
             style={{ paddingLeft: 42 }}
           />
@@ -128,11 +128,11 @@ export default function Ingredients() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="empty-state">
-            <Package size={48} className="empty-state-icon"/>
+            <Icon name="inventory_2" size={48} className="empty-state-icon"/>
             <h3>No ingredients found</h3>
             <p>{search ? 'Try a different search term' : 'Add your first ingredient to get started'}</p>
             <button className="btn btn-primary" style={{ marginTop:16 }} onClick={openAdd}>
-              <Plus size={16}/> Add Ingredient
+              <Icon name="add" size={16}/> Add Ingredient
             </button>
           </div>
         ) : (
@@ -167,14 +167,14 @@ export default function Ingredients() {
                     <td>
                       <div style={{ display:'flex', gap:6 }}>
                         <button className="btn btn-ghost btn-sm" onClick={() => openEdit(ing)} title="Edit">
-                          <Edit3 size={15}/>
+                          <Icon name="edit" size={15}/>
                         </button>
                         <button
                           className="btn btn-ghost btn-sm" onClick={() => del(ing.id)}
                           style={{ color:'var(--red)' }} disabled={deleting===ing.id}
                           title="Delete"
                         >
-                          {deleting === ing.id ? <Loader2 size={15} className="animate-pulse"/> : <Trash2 size={15}/>}
+                          {deleting === ing.id ? <Icon name="progress_activity" size={15} className="animate-pulse"/> : <Icon name="delete" size={15}/>}
                         </button>
                       </div>
                     </td>
@@ -192,7 +192,7 @@ export default function Ingredients() {
           <div className="modal">
             <div className="modal-header">
               <h3 className="modal-title">{modal==='add' ? 'Add Ingredient' : 'Edit Ingredient'}</h3>
-              <button className="btn btn-ghost btn-sm" onClick={closeModal}><X size={18}/></button>
+              <button className="btn btn-ghost btn-sm" onClick={closeModal}><Icon name="close" size={18}/></button>
             </div>
             <form onSubmit={save}>
               <div className="modal-body">
@@ -215,7 +215,7 @@ export default function Ingredients() {
                   <label htmlFor="avail" className="form-label" style={{ marginBottom:0, cursor:'pointer' }}>
                     <div className={`toggle ${form.is_available ? 'on' : ''}`} onClick={() => setForm(f=>({...f, is_available:!f.is_available}))}/>
                   </label>
-                  <span style={{ fontSize:'.875rem', color:'var(--gray-600)' }}>
+                  <span style={{ fontSize:'.875rem', color:'var(--text-muted)' }}>
                     {form.is_available ? '✓ Available' : 'Unavailable'}
                   </span>
                 </div>
@@ -223,7 +223,7 @@ export default function Ingredients() {
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={closeModal}>Cancel</button>
                 <button type="submit" className="btn btn-primary" disabled={saving}>
-                  {saving ? <><Loader2 size={16} className="animate-pulse"/>Saving…</> : <><CheckCircle size={16}/>Save</>}
+                  {saving ? <><Icon name="progress_activity" size={16} className="animate-pulse"/>Saving…</> : <><Icon name="check_circle" size={16}/>'save'</>}
                 </button>
               </div>
             </form>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { API } from '../api'
 import { useToast } from '../components/Toast'
-import { FlaskConical, Package, Send, Loader2, Save, Printer, ChevronDown, CheckCircle, XCircle, Bot } from 'lucide-react'
+import { Icon } from '../components/Icon'
 
 // --- Subcomponents ---
 
@@ -41,7 +41,7 @@ function ChatAssistant({ context, onAction }) {
     <div className="card" style={{ display: 'flex', flexDirection: 'column', height: '100%', maxHeight: 600 }}>
       <div className="card-header" style={{ background: 'var(--gray-50)', padding: '12px 16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <Bot size={18} color="var(--farm-green-mid)" />
+          <Icon name="smart_toy" size={18} color="var(--text-main)" />
           <h3 style={{ fontSize: '.9375rem', fontWeight: 700, margin: 0 }}>AI Assistant</h3>
         </div>
       </div>
@@ -55,7 +55,7 @@ function ChatAssistant({ context, onAction }) {
         ))}
         {loading && (
           <div className="chat-msg ai">
-            <div className="chat-bubble ai"><Loader2 size={14} className="animate-pulse" /></div>
+            <div className="chat-bubble ai"><Icon name="progress_activity" size={14} className="animate-pulse" /></div>
           </div>
         )}
         <div ref={chatEndRef} />
@@ -69,7 +69,7 @@ function ChatAssistant({ context, onAction }) {
           style={{ padding: '8px 12px' }}
         />
         <button type="submit" className="btn btn-primary" style={{ padding: '8px 12px' }} disabled={loading || !input.trim()}>
-          <Send size={16} />
+          <Icon name="send" size={16} />
         </button>
       </form>
     </div>
@@ -245,9 +245,9 @@ export default function Formulation() {
       <div className="page-hero" style={{ marginBottom: 32 }}>
         <div className="container page-hero-inner">
           <h1 style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <FlaskConical size={28} /> Formulation Calculator
+            <Icon name="science" size={28} /> Formulation Calculator
           </h1>
-          <p style={{ opacity: .8 }}>Optimize feed cost while meeting nutritional targets</p>
+          <p style={{ opacity: .8, marginTop: 8 }}>Optimize feed cost while meeting nutritional targets</p>
         </div>
       </div>
 
@@ -322,13 +322,13 @@ export default function Formulation() {
                   {/* Selected Ingredients List */}
                   {selectedIngs.length === 0 ? (
                     <div className="empty-state" style={{ padding: '30px 20px' }}>
-                      <Package size={32} style={{ color: 'var(--gray-300)', marginBottom: 12 }} />
+                      <Icon name="inventory_2" size={32} style={{ color: 'var(--gray-300)', marginBottom: 12 }} />
                       <p style={{ margin: 0, color: 'var(--gray-500)', fontSize: '.9375rem' }}>Select ingredients to include in the formulation.</p>
                     </div>
                   ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                      <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded mb-2">
-                        <p className="text-sm" style={{ color: '#1e40af', fontSize: '.875rem' }}>
+                      <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded mb-2" style={{ background: 'var(--blue-bg)', borderLeft: '4px solid var(--blue)', padding: '12px', borderRadius: '4px', marginBottom: '8px' }}>
+                        <p className="text-sm" style={{ color: 'var(--blue)', fontSize: '.875rem' }}>
                           <strong>{selectedIngs.filter(i => i.included).length} included</strong> / {selectedIngs.length} total
                           {selectedIngs.filter(i => i.min_percentage === i.max_percentage).length > 0 && ` · 🔒 ${selectedIngs.filter(i => i.min_percentage === i.max_percentage).length} locked`}
                         </p>
@@ -345,14 +345,14 @@ export default function Formulation() {
                                     <input type="checkbox" id={`inc-${idx}`} checked={ing.included} onChange={e => updateIng(idx, 'included', e.target.checked)} style={{ display: 'none' }}/>
                                     <div className={`toggle ${ing.included ? 'on' : ''}`} onClick={() => updateIng(idx, 'included', !ing.included)} />
                                   </div>
-                                  <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 700, color: 'var(--gray-900)' }}>{ing.name}</h4>
+                                  <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 600 }}>{ing.name}</h4>
                                   {isLocked && <span className="badge badge-amber">🔒 Locked {(ing.min_percentage * 100).toFixed(2)}%</span>}
-                                  <span style={{ fontSize: '.8125rem', color: 'var(--gray-500)' }}>₱{parseFloat(ing.cost_per_kg).toFixed(2)}/kg</span>
+                                  <span style={{ fontSize: '.8125rem', color: 'var(--text-muted)' }}>₱{parseFloat(ing.cost_per_kg).toFixed(2)}/kg</span>
                                 </div>
                                 
                                 <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    <label style={{ fontSize: '.8125rem', color: 'var(--gray-600)', fontWeight: 600 }}>Min %</label>
+                                    <label style={{ fontSize: '.8125rem', color: 'var(--text-muted)', fontWeight: 500 }}>Min %</label>
                                     <input 
                                       type="number" step="any" min="0" max="100"
                                       className="form-input" 
@@ -362,7 +362,7 @@ export default function Formulation() {
                                     />
                                   </div>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    <label style={{ fontSize: '.8125rem', color: 'var(--gray-600)', fontWeight: 600 }}>Max %</label>
+                                    <label style={{ fontSize: '.8125rem', color: 'var(--text-muted)', fontWeight: 500 }}>Max %</label>
                                     <input 
                                       type="number" step="any" min="0" max="100"
                                       className="form-input" 
@@ -377,7 +377,7 @@ export default function Formulation() {
                                 </div>
                               </div>
                               <button className="btn btn-ghost btn-sm" style={{ color: 'var(--red)', padding: 6 }} onClick={() => removeIng(idx)}>
-                                <XCircle size={18} />
+                                <Icon name="cancel" size={18} />
                               </button>
                             </div>
                           </div>
@@ -394,7 +394,7 @@ export default function Formulation() {
                       disabled={calculating || selectedIngs.filter(i => i.included).length < 2}
                       style={{ fontSize: '1.125rem', padding: '16px' }}
                     >
-                      {calculating ? <><Loader2 size={20} className="animate-pulse" /> Optimizing...</> : 'Calculate Optimal Formulation'}
+                      {calculating ? <><Icon name="progress_activity" size={20} className="animate-pulse" /> Optimizing...</> : 'Calculate Optimal Formulation'}
                     </button>
                   </div>
                 </div>
@@ -412,9 +412,9 @@ export default function Formulation() {
           {/* Results Section */}
           {results && (
             <div id="results-section" className="card" style={{ marginTop: 16 }}>
-              <div className="card-header" style={{ background: results.status === 'success' ? 'var(--emerald-light)' : 'var(--red-light)' }}>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: results.status === 'success' ? '#065f46' : '#991b1b', display: 'flex', alignItems: 'center', gap: 10, margin: 0 }}>
-                  {results.status === 'success' ? <><CheckCircle size={24} /> Optimal Solution Found</> : <><XCircle size={24} /> No Feasible Solution</>}
+              <div className="card-header" style={{ background: results.status === 'success' ? 'var(--bg-app)' : 'var(--rose-bg)', borderBottom: `1px solid ${results.status === 'success' ? 'var(--border-light)' : 'var(--rose-border)'}` }}>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: results.status === 'success' ? 'var(--emerald)' : 'var(--rose)', display: 'flex', alignItems: 'center', gap: 10, margin: 0 }}>
+                  {results.status === 'success' ? <><Icon name="check_circle" size={24} /> Optimal Solution Found</> : <><Icon name="cancel" size={24} /> No Feasible Solution</>}
                 </h2>
               </div>
               
@@ -422,12 +422,12 @@ export default function Formulation() {
                 {results.status === 'failure' ? (
                   // FAILURE UI
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                    <p style={{ color: 'var(--gray-600)', fontSize: '.9375rem' }}>{results.detail}</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '.9375rem' }}>{results.detail}</p>
                     
                     {/* Locked Summary */}
                     {results.locked_summary && results.locked_summary.count > 0 && (
-                      <div style={{ background: '#fffbeb', border: '1px solid #fcd34d', borderRadius: 12, padding: 16 }}>
-                        <p style={{ fontSize: '.8125rem', fontWeight: 700, color: '#92400e', margin: '0 0 8px 0' }}>
+                      <div style={{ background: 'var(--amber-bg)', border: '1px solid var(--amber-border)', borderRadius: 8, padding: 16 }}>
+                        <p style={{ fontSize: '.8125rem', fontWeight: 600, color: 'var(--amber)', margin: '0 0 8px 0' }}>
                           🔒 Locked Ingredients ({results.locked_summary.total_locked_percent}% fixed)
                         </p>
                         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -435,7 +435,7 @@ export default function Formulation() {
                             <span key={l.name} className="badge badge-amber">{l.name} {l.locked_at_percent}%</span>
                           ))}
                         </div>
-                        <p style={{ fontSize: '.8125rem', color: '#b45309', margin: '8px 0 0 0' }}>
+                        <p style={{ fontSize: '.8125rem', color: 'var(--amber)', opacity: 0.8, margin: '8px 0 0 0' }}>
                           Remaining for free ingredients: <strong>{results.locked_summary.remaining_percent_for_free}%</strong>
                         </p>
                       </div>
@@ -443,9 +443,9 @@ export default function Formulation() {
 
                     {/* Sum Check Issue */}
                     {results.infeasibility_diagnosis?.sum_check && !results.infeasibility_diagnosis.sum_check.feasible && (
-                      <div style={{ background: 'var(--red-light)', border: '1px solid #fca5a5', borderRadius: 12, padding: 16 }}>
-                        <p style={{ fontSize: '.8125rem', fontWeight: 700, color: '#991b1b', margin: '0 0 4px 0' }}>⚠️ Sum Constraint Issue</p>
-                        <p style={{ fontSize: '.875rem', color: '#b91c1c', margin: 0 }}>{results.infeasibility_diagnosis.sum_check.issue}</p>
+                      <div style={{ background: 'var(--rose-bg)', border: '1px solid var(--rose-border)', borderRadius: 8, padding: 16 }}>
+                        <p style={{ fontSize: '.8125rem', fontWeight: 600, color: 'var(--rose)', margin: '0 0 4px 0' }}>⚠️ Sum Constraint Issue</p>
+                        <p style={{ fontSize: '.875rem', color: 'var(--rose)', margin: 0 }}>{results.infeasibility_diagnosis.sum_check.issue}</p>
                       </div>
                     )}
 
@@ -486,14 +486,14 @@ export default function Formulation() {
                         <h4 style={{ fontSize: '.9375rem', fontWeight: 700, marginBottom: 12 }}>Suggested Adjustments</h4>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                           {results.adjustment_suggestions.map((s, i) => (
-                            <div key={i} style={{ background: 'var(--blue-light)', border: '1px solid #93c5fd', borderRadius: 12, padding: 12, display: 'flex', gap: 12 }}>
+                            <div key={i} style={{ background: 'var(--blue-bg)', border: '1px solid var(--border-light)', borderRadius: 8, padding: 12, display: 'flex', gap: 12 }}>
                               <span style={{ fontSize: '1.2rem' }}>💡</span>
                               <div>
-                                <p style={{ fontSize: '.875rem', fontWeight: 700, color: '#1e40af', margin: '0 0 4px 0' }}>
+                                <p style={{ fontSize: '.875rem', fontWeight: 600, color: 'var(--text-main)', margin: '0 0 4px 0' }}>
                                   {s.action === 'increase_max' ? '↑ Raise max of' : '↓ Lower min of'} <span style={{ fontFamily: 'monospace', background: '#bfdbfe', padding: '2px 4px', borderRadius: 4 }}>{s.ingredient}</span>
                                   {' '}— {s.field}: {(s.current_value*100).toFixed(2)}% → {(s.suggested_value*100).toFixed(2)}%
                                 </p>
-                                <p style={{ fontSize: '.8125rem', color: '#1d4ed8', margin: 0 }}>{s.reason}</p>
+                                <p style={{ fontSize: '.8125rem', color: 'var(--text-muted)', margin: 0 }}>{s.reason}</p>
                               </div>
                             </div>
                           ))}
@@ -505,9 +505,9 @@ export default function Formulation() {
                   // SUCCESS UI
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                     {/* Cost Hero */}
-                    <div style={{ background: 'linear-gradient(135deg, var(--emerald) 0%, #047857 100%)', borderRadius: 16, padding: 32, textAlign: 'center', color: '#fff', boxShadow: 'var(--shadow-md)' }}>
-                      <p style={{ fontSize: '.9375rem', opacity: .9, margin: '0 0 8px 0', textTransform: 'uppercase', letterSpacing: '.05em', fontWeight: 600 }}>Total Cost per kg</p>
-                      <h2 style={{ fontSize: '3.5rem', fontWeight: 900, margin: 0, lineHeight: 1 }}>₱{parseFloat(results.summary.cost_per_kg).toFixed(2)}</h2>
+                    <div style={{ background: 'var(--text-main)', borderRadius: 12, padding: 32, textAlign: 'center', color: 'var(--bg-surface)', boxShadow: 'var(--shadow-sm)' }}>
+                      <p style={{ fontSize: '.9375rem', opacity: .7, margin: '0 0 8px 0', textTransform: 'uppercase', letterSpacing: '.05em', fontWeight: 500 }}>Total Cost per kg</p>
+                      <h2 style={{ fontSize: '3.5rem', fontWeight: 700, margin: 0, lineHeight: 1, color: 'var(--bg-surface)', letterSpacing: '-0.04em' }}>₱{parseFloat(results.summary.cost_per_kg).toFixed(2)}</h2>
                       <p style={{ fontSize: '.875rem', opacity: .8, margin: '12px 0 0 0' }}>
                         {results.summary.active_ingredients_count} active ingredients · {results.summary.locked_ingredients_count || 0} locked
                       </p>
@@ -516,8 +516,8 @@ export default function Formulation() {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
                       {/* Ingredient Mix */}
                       <div>
-                        <h4 style={{ fontSize: '.9375rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--gray-500)', marginBottom: 12 }}>Ingredient Mix</h4>
-                        <div style={{ background: 'var(--gray-50)', borderRadius: 12, padding: 16, border: '1px solid var(--gray-200)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        <h4 style={{ fontSize: '.9375rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--text-muted)', marginBottom: 12 }}>Ingredient Mix</h4>
+                        <div style={{ background: 'var(--bg-app)', borderRadius: 8, padding: 16, border: '1px solid var(--border-light)', display: 'flex', flexDirection: 'column', gap: 8 }}>
                           {results.ingredient_composition.filter(i => i.included).map(i => (
                             <div key={i.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 8, borderBottom: '1px solid var(--gray-200)' }}>
                               <div>
@@ -525,8 +525,8 @@ export default function Formulation() {
                                 {i.is_locked && <span className="badge badge-amber" style={{ marginLeft: 8 }}>🔒</span>}
                               </div>
                               <div style={{ textAlign: 'right' }}>
-                                <div style={{ fontWeight: 800, color: 'var(--farm-green-mid)' }}>{(i.percentage * 100).toFixed(2)}%</div>
-                                <div style={{ fontSize: '.75rem', color: 'var(--gray-500)' }}>₱{parseFloat(i.cost_contribution).toFixed(2)}</div>
+                                <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>{(i.percentage * 100).toFixed(2)}%</div>
+                                <div style={{ fontSize: '.75rem', color: 'var(--text-muted)' }}>₱{parseFloat(i.cost_contribution).toFixed(2)}</div>
                               </div>
                             </div>
                           ))}
@@ -535,7 +535,7 @@ export default function Formulation() {
 
                       {/* Nutrient Achievement */}
                       <div>
-                        <h4 style={{ fontSize: '.9375rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--gray-500)', marginBottom: 12 }}>✅ All Targets Met</h4>
+                        <h4 style={{ fontSize: '.9375rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--text-muted)', marginBottom: 12 }}>✅ All Targets Met</h4>
                         <div className="table-wrap">
                           <table>
                             <thead>
@@ -564,10 +564,10 @@ export default function Formulation() {
                     {/* Actions */}
                     <div style={{ display: 'flex', gap: 16, marginTop: 16 }}>
                       <button className="btn btn-primary btn-lg" style={{ flex: 1 }} onClick={() => setSaveModal(true)}>
-                        <Save size={18} /> Save Formulation
+                        <Icon name="save" size={18} /> 'save' Formulation
                       </button>
                       <button className="btn btn-secondary btn-lg" onClick={printResults}>
-                        <Printer size={18} /> Print
+                        <Icon name="print" size={18} /> Print
                       </button>
                     </div>
                   </div>
@@ -578,13 +578,13 @@ export default function Formulation() {
         </div>
       </div>
 
-      {/* Save Modal */}
+      {/* 'save' Modal */}
       {saveModal && (
         <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) setSaveModal(false) }}>
           <div className="modal">
             <div className="modal-header">
-              <h3 className="modal-title">Save Formulation</h3>
-              <button className="btn btn-ghost btn-sm" onClick={() => setSaveModal(false)}><XCircle size={18}/></button>
+              <h3 className="modal-title">'save' Formulation</h3>
+              <button className="btn btn-ghost btn-sm" onClick={() => setSaveModal(false)}><Icon name="cancel" size={18}/></button>
             </div>
             <form onSubmit={saveFormulation}>
               <div className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -612,7 +612,7 @@ export default function Formulation() {
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={() => setSaveModal(false)}>Cancel</button>
                 <button type="submit" className="btn btn-primary" disabled={saving}>
-                  {saving ? <><Loader2 size={16} className="animate-pulse"/>Saving...</> : <><Save size={16}/>Save Record</>}
+                  {saving ? <><Icon name="progress_activity" size={16} className="animate-pulse"/>Saving...</> : <><Icon name="save" size={16}/>'save' Record</>}
                 </button>
               </div>
             </form>

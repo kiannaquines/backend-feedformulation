@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { CheckCircle, XCircle, Info, AlertTriangle, X } from 'lucide-react'
+import { Icon } from './Icon'
 
 const ICONS = {
-  success: <CheckCircle size={18}/>,
-  error:   <XCircle size={18}/>,
-  info:    <Info size={18}/>,
-  warning: <AlertTriangle size={18}/>,
+  success: <Icon name="check_circle" size={18}/>,
+  error:   <Icon name="cancel" size={18}/>,
+  info:    <Icon name="info" size={18}/>,
+  warning: <Icon name="warning" size={18}/>,
 }
 
 export default function Toast({ message, type = 'info', onClose, duration = 4000 }) {
@@ -22,7 +22,7 @@ export default function Toast({ message, type = 'info', onClose, duration = 4000
         onClick={onClose}
         style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: 'inherit', opacity: .7 }}
       >
-        <X size={15}/>
+        <Icon name="close" size={15}/>
       </button>
     </div>
   )
