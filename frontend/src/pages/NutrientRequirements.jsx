@@ -82,8 +82,8 @@ export default function NutrientRequirements() {
   return (
     <div>
       <ToastContainer/>
-      <div className="page-hero" style={{ marginBottom:32 }}>
-        <div className="container page-hero-inner">
+      <div className="container" style={{ marginBottom: 16 }}>
+        <div className="page-hero-inner">
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
             <div>
               <h1><Icon name="checklist" size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Nutrient Profiles</h1>

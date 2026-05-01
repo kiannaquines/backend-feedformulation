@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoute from './components/PrivateRoute'
 import SidebarLayout from './components/SidebarLayout'
+import { Toaster } from '@/components/ui/use-toast'
 
 import Login             from './pages/Login'
 import Register          from './pages/Register'
@@ -36,6 +37,7 @@ export default function App() {
             <PrivateRoute><SidebarLayout><SavedFormulations/></SidebarLayout></PrivateRoute>
           }/>
         </Routes>
+        <Toaster />
       </BrowserRouter>
     </AuthProvider>
   )

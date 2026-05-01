@@ -1,7 +1,28 @@
 import { useEffect, useState } from 'react'
-import { API } from '../api'
-import { useToast } from '../components/Toast'
-import { Icon } from '../components/Icon'
+import { API } from '@/api'
+import { useToast } from '@/components/ui/use-toast'
+import { Icon } from '@/components/Icon'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
 const EMPTY = {
   name: '', price: '', crude_protein: '', metabolized_energy: '',
@@ -11,27 +32,27 @@ const EMPTY = {
 }
 
 export default function Ingredients() {
-  const { toast, ToastContainer } = useToast()
-  const [list, setList]       = useState([])
-  const [search, setSearch]   = useState('')
+  const { toast } = useToast()
+  const [list, setList] = useState([])
+  const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
-  const [modal, setModal]     = useState(null)   // null | 'add' | 'edit'
+  const [modal, setModal] = useState(null)
   const [editing, setEditing] = useState(null)
-  const [form, setForm]       = useState(EMPTY)
-  const [saving, setSaving]   = useState(false)
+  const [form, setForm] = useState(EMPTY)
+  const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(null)
 
   const load = () => {
     setLoading(true)
     API.ingredients.all()
       .then(r => setList(r.data || []))
-      .catch(() => toast('Failed to load ingredients', 'error'))
+      .catch(() => toast({ variant: 'destructive', title: 'Failed to load ingredients' }))
       .finally(() => setLoading(false))
   }
   useEffect(load, [])
 
-  const openAdd  = ()  => { setForm(EMPTY); setEditing(null); setModal('add') }
-  const openEdit = ing => { setForm({...ing, price: ing.price||''}); setEditing(ing); setModal('edit') }
+  const openAdd = () => { setForm(EMPTY); setEditing(null); setModal('add') }
+  const openEdit = ing => { setForm({ ...ing, price: ing.price || '' }); setEditing(ing); setModal('edit') }
   const closeModal = () => { setModal(null); setEditing(null); setForm(EMPTY) }
 
   const set = k => e => setForm(f => ({
@@ -49,14 +70,14 @@ export default function Ingredients() {
       })
       if (modal === 'edit') {
         await API.ingredients.update(editing.id, payload)
-        toast('Ingredient updated ✓', 'success')
+        toast({ title: 'Success', description: 'Ingredient updated ✓' })
       } else {
         await API.ingredients.create(payload)
-        toast('Ingredient added ✓', 'success')
+        toast({ title: 'Success', description: 'Ingredient added ✓' })
       }
       load(); closeModal()
     } catch (err) {
-      toast(err.response?.data?.detail || 'Save failed', 'error')
+      toast({ variant: 'destructive', title: 'Error', description: err.response?.data?.detail || 'Save failed' })
     } finally {
       setSaving(false)
     }
@@ -67,10 +88,10 @@ export default function Ingredients() {
     setDeleting(id)
     try {
       await API.ingredients.delete(id)
-      toast('Ingredient removed', 'success')
+      toast({ title: 'Success', description: 'Ingredient removed' })
       load()
     } catch {
-      toast('Delete failed', 'error')
+      toast({ variant: 'destructive', title: 'Delete failed' })
     } finally {
       setDeleting(null)
     }
@@ -79,157 +100,195 @@ export default function Ingredients() {
   const filtered = list.filter(i => i.name?.toLowerCase().includes(search.toLowerCase()))
 
   const FIELDS = [
-    { k: 'name',               label: 'Name *',           type: 'text'  },
-    { k: 'price',              label: 'Price / kg (₱)*',  type: 'number'},
-    { k: 'crude_protein',      label: 'Crude Protein (%)',type: 'number'},
-    { k: 'metabolized_energy', label: 'Energy ME',        type: 'number'},
-    { k: 'calcium',            label: 'Calcium (%)',       type: 'number'},
-    { k: 'total_phosphorus',   label: 'Total Phosphorus (%)', type: 'number'},
-    { k: 'avail_phosphorus',   label: 'Avail. Phosphorus (%)', type: 'number'},
-    { k: 'crude_fiber',        label: 'Crude Fiber (%)',  type: 'number'},
-    { k: 'crude_fat',          label: 'Crude Fat (%)',    type: 'number'},
-    { k: 'lysine',             label: 'Lysine (%)',       type: 'number'},
-    { k: 'methionine',         label: 'Methionine (%)',   type: 'number'},
+    { k: 'name', label: 'Name *', type: 'text' },
+    { k: 'price', label: 'Price / kg (₱)*', type: 'number' },
+    { k: 'crude_protein', label: 'Crude Protein (%)', type: 'number' },
+    { k: 'metabolized_energy', label: 'Energy ME', type: 'number' },
+    { k: 'calcium', label: 'Calcium (%)', type: 'number' },
+    { k: 'total_phosphorus', label: 'Total Phosphorus (%)', type: 'number' },
+    { k: 'avail_phosphorus', label: 'Avail. Phosphorus (%)', type: 'number' },
+    { k: 'crude_fiber', label: 'Crude Fiber (%)', type: 'number' },
+    { k: 'crude_fat', label: 'Crude Fat (%)', type: 'number' },
+    { k: 'lysine', label: 'Lysine (%)', type: 'number' },
+    { k: 'methionine', label: 'Methionine (%)', type: 'number' },
   ]
 
   return (
-    <div>
-      <ToastContainer/>
-
-      <div className="page-hero" style={{ marginBottom: 32 }}>
-        <div className="container page-hero-inner">
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
-            <div>
-              <h1><Icon name="inventory_2" size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Ingredients</h1>
-              <p style={{ opacity:.8 }}>{list.length} ingredients in library</p>
-            </div>
-            <button className="btn btn-lg" style={{ background:'var(--bg-surface)', color:'var(--text-main)', fontWeight:600 }} onClick={openAdd}>
-              <Icon name="add" size={18}/> Add Ingredient
-            </button>
-          </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+            <Icon name="inventory_2" size={28} />
+            Ingredients
+          </h1>
+          <p className="text-muted-foreground mt-1">{list.length} ingredients in library</p>
         </div>
+        <Button onClick={openAdd} size="lg">
+          <Icon name="add" size={18} />
+          Add Ingredient
+        </Button>
       </div>
 
-      <div className="container">
-        {/* 'search' */}
-        <div style={{ position:'relative', marginBottom:24 }}>
-          <Icon name="search" size={16} style={{ position:'absolute', left:14, top:'50%', transform:'translateY(-50%)', color:'var(--text-muted)' }}/>
-          <input
-            className="form-input" placeholder="'search' ingredients…"
-            value={search} onChange={e => setSearch(e.target.value)}
-            style={{ paddingLeft: 42 }}
-          />
-        </div>
+      {/* Search */}
+      <div className="relative">
+        <Icon name="search" size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          placeholder="Search ingredients…"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="pl-10"
+        />
+      </div>
 
-        {/* Table */}
+      {/* Table */}
+      <Card>
         {loading ? (
-          <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-            {[...Array(5)].map((_, i) => <div key={i} className="skeleton" style={{ height:56, borderRadius:12 }}/>)}
+          <div className="p-8 space-y-4">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-12 bg-muted animate-pulse rounded" />
+            ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="empty-state">
-            <Icon name="inventory_2" size={48} className="empty-state-icon"/>
-            <h3>No ingredients found</h3>
-            <p>{search ? 'Try a different search term' : 'Add your first ingredient to get started'}</p>
-            <button className="btn btn-primary" style={{ marginTop:16 }} onClick={openAdd}>
-              <Icon name="add" size={16}/> Add Ingredient
-            </button>
+          <div className="flex flex-col items-center justify-center p-12 text-center">
+            <Icon name="inventory_2" size={48} className="text-muted-foreground mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No ingredients found</h3>
+            <p className="text-muted-foreground mb-4">
+              {search ? 'Try a different search term' : 'Add your first ingredient to get started'}
+            </p>
+            <Button onClick={openAdd}>
+              <Icon name="add" size={16} />
+              Add Ingredient
+            </Button>
           </div>
         ) : (
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Protein %</th>
-                  <th>Energy ME</th>
-                  <th>Calcium %</th>
-                  <th>Phosphorus %</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map(ing => (
-                  <tr key={ing.id}>
-                    <td><strong>{ing.name}</strong></td>
-                    <td>₱{parseFloat(ing.price || 0).toFixed(2)}</td>
-                    <td>{ing.crude_protein ?? '—'}</td>
-                    <td>{ing.metabolized_energy ?? '—'}</td>
-                    <td>{ing.calcium ?? '—'}</td>
-                    <td>{ing.total_phosphorus ?? '—'}</td>
-                    <td>
-                      <span className={`badge ${ing.is_available ? 'badge-green' : 'badge-gray'}`}>
-                        {ing.is_available ? '✓ Available' : 'Unavailable'}
-                      </span>
-                    </td>
-                    <td>
-                      <div style={{ display:'flex', gap:6 }}>
-                        <button className="btn btn-ghost btn-sm" onClick={() => openEdit(ing)} title="Edit">
-                          <Icon name="edit" size={15}/>
-                        </button>
-                        <button
-                          className="btn btn-ghost btn-sm" onClick={() => del(ing.id)}
-                          style={{ color:'var(--red)' }} disabled={deleting===ing.id}
-                          title="Delete"
-                        >
-                          {deleting === ing.id ? <Icon name="progress_activity" size={15} className="animate-pulse"/> : <Icon name="delete" size={15}/>}
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead>Protein %</TableHead>
+                <TableHead>Energy ME</TableHead>
+                <TableHead>Calcium %</TableHead>
+                <TableHead>Phosphorus %</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filtered.map(ing => (
+                <TableRow key={ing.id}>
+                  <TableCell className="font-semibold">{ing.name}</TableCell>
+                  <TableCell>₱{parseFloat(ing.price || 0).toFixed(2)}</TableCell>
+                  <TableCell>{ing.crude_protein ?? '—'}</TableCell>
+                  <TableCell>{ing.metabolized_energy ?? '—'}</TableCell>
+                  <TableCell>{ing.calcium ?? '—'}</TableCell>
+                  <TableCell>{ing.total_phosphorus ?? '—'}</TableCell>
+                  <TableCell>
+                    <Badge variant={ing.is_available ? 'default' : 'secondary'}>
+                      {ing.is_available ? (
+                        <>
+                          <Icon name="check" size={12} className="mr-1" />
+                          Available
+                        </>
+                      ) : (
+                        'Unavailable'
+                      )}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button variant="ghost" size="sm" onClick={() => openEdit(ing)}>
+                        <Icon name="edit" size={16} />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => del(ing.id)}
+                        disabled={deleting === ing.id}
+                        className="text-destructive hover:text-destructive"
+                      >
+                        {deleting === ing.id ? (
+                          <Icon name="progress_activity" size={16} className="animate-spin" />
+                        ) : (
+                          <Icon name="delete" size={16} />
+                        )}
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         )}
-      </div>
+      </Card>
 
       {/* Modal */}
-      {modal && (
-        <div className="modal-overlay" onClick={e => { if(e.target===e.currentTarget) closeModal() }}>
-          <div className="modal">
-            <div className="modal-header">
-              <h3 className="modal-title">{modal==='add' ? 'Add Ingredient' : 'Edit Ingredient'}</h3>
-              <button className="btn btn-ghost btn-sm" onClick={closeModal}><Icon name="close" size={18}/></button>
+      <Dialog open={!!modal} onOpenChange={open => !open && closeModal()}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{modal === 'add' ? 'Add Ingredient' : 'Edit Ingredient'}</DialogTitle>
+            <DialogDescription>
+              {modal === 'add' ? 'Add a new ingredient to your library' : 'Update ingredient details'}
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={save}>
+            <div className="grid grid-cols-2 gap-4 py-4">
+              {FIELDS.map(({ k, label, type }) => (
+                <div key={k} className={k === 'name' ? 'col-span-2' : ''}>
+                  <Label htmlFor={k}>{label}</Label>
+                  <Input
+                    id={k}
+                    type={type}
+                    step={type === 'number' ? 'any' : undefined}
+                    value={form[k] ?? ''}
+                    onChange={set(k)}
+                    required={k === 'name' || k === 'price'}
+                    placeholder={type === 'number' ? '0.00' : ''}
+                    className="mt-1.5"
+                  />
+                </div>
+              ))}
+              <div className="col-span-2 flex items-center gap-3 mt-2">
+                <input
+                  type="checkbox"
+                  id="avail"
+                  checked={!!form.is_available}
+                  onChange={set('is_available')}
+                  className="w-4 h-4"
+                />
+                <Label htmlFor="avail" className="cursor-pointer">
+                  {form.is_available ? (
+                    <span className="flex items-center gap-1">
+                      <Icon name="check" size={14} /> Available
+                    </span>
+                  ) : (
+                    'Unavailable'
+                  )}
+                </Label>
+              </div>
             </div>
-            <form onSubmit={save}>
-              <div className="modal-body">
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
-                  {FIELDS.map(({ k, label, type }) => (
-                    <div key={k} className="form-group" style={{ gridColumn: k==='name' ? 'span 2' : undefined }}>
-                      <label className="form-label">{label}</label>
-                      <input
-                        className="form-input" type={type}
-                        step={type==='number' ? 'any' : undefined}
-                        value={form[k] ?? ''} onChange={set(k)}
-                        required={k==='name'||k==='price'}
-                        placeholder={type==='number' ? '0.00' : ''}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="toggle-wrapper" style={{ marginTop:16 }}>
-                  <input type="checkbox" id="avail" checked={!!form.is_available} onChange={set('is_available')}/>
-                  <label htmlFor="avail" className="form-label" style={{ marginBottom:0, cursor:'pointer' }}>
-                    <div className={`toggle ${form.is_available ? 'on' : ''}`} onClick={() => setForm(f=>({...f, is_available:!f.is_available}))}/>
-                  </label>
-                  <span style={{ fontSize:'.875rem', color:'var(--text-muted)' }}>
-                    {form.is_available ? '✓ Available' : 'Unavailable'}
-                  </span>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={closeModal}>Cancel</button>
-                <button type="submit" className="btn btn-primary" disabled={saving}>
-                  {saving ? <><Icon name="progress_activity" size={16} className="animate-pulse"/>Saving…</> : <><Icon name="check_circle" size={16}/>'save'</>}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={closeModal}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={saving}>
+                {saving ? (
+                  <>
+                    <Icon name="progress_activity" size={16} className="animate-spin" />
+                    Saving…
+                  </>
+                ) : (
+                  <>
+                    <Icon name="check_circle" size={16} />
+                    Save
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

@@ -242,8 +242,8 @@ export default function Formulation() {
       <ToastContainer />
       
       {/* Header */}
-      <div className="page-hero" style={{ marginBottom: 32 }}>
-        <div className="container page-hero-inner">
+      <div className="container" style={{ marginBottom: 16 }}>
+        <div className="page-hero-inner">
           <h1 style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <Icon name="science" size={28} /> Formulation Calculator
           </h1>
@@ -330,7 +330,7 @@ export default function Formulation() {
                       <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded mb-2" style={{ background: 'var(--blue-bg)', borderLeft: '4px solid var(--blue)', padding: '12px', borderRadius: '4px', marginBottom: '8px' }}>
                         <p className="text-sm" style={{ color: 'var(--blue)', fontSize: '.875rem' }}>
                           <strong>{selectedIngs.filter(i => i.included).length} included</strong> / {selectedIngs.length} total
-                          {selectedIngs.filter(i => i.min_percentage === i.max_percentage).length > 0 && ` · 🔒 ${selectedIngs.filter(i => i.min_percentage === i.max_percentage).length} locked`}
+                          {selectedIngs.filter(i => i.min_percentage === i.max_percentage).length > 0 && <span> &middot; <Icon name="lock" size={12}/> {selectedIngs.filter(i => i.min_percentage === i.max_percentage).length} locked</span>}
                         </p>
                       </div>
 
@@ -346,7 +346,7 @@ export default function Formulation() {
                                     <div className={`toggle ${ing.included ? 'on' : ''}`} onClick={() => updateIng(idx, 'included', !ing.included)} />
                                   </div>
                                   <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 600 }}>{ing.name}</h4>
-                                  {isLocked && <span className="badge badge-amber">🔒 Locked {(ing.min_percentage * 100).toFixed(2)}%</span>}
+                                  {isLocked && <span className="badge badge-amber"><Icon name="lock" size={12} style={{ marginRight:4 }}/> Locked {(ing.min_percentage * 100).toFixed(2)}%</span>}
                                   <span style={{ fontSize: '.8125rem', color: 'var(--text-muted)' }}>₱{parseFloat(ing.cost_per_kg).toFixed(2)}/kg</span>
                                 </div>
                                 
@@ -428,7 +428,7 @@ export default function Formulation() {
                     {results.locked_summary && results.locked_summary.count > 0 && (
                       <div style={{ background: 'var(--amber-bg)', border: '1px solid var(--amber-border)', borderRadius: 8, padding: 16 }}>
                         <p style={{ fontSize: '.8125rem', fontWeight: 600, color: 'var(--amber)', margin: '0 0 8px 0' }}>
-                          🔒 Locked Ingredients ({results.locked_summary.total_locked_percent}% fixed)
+                          <Icon name="lock" size={14} style={{ marginRight:4 }}/> Locked Ingredients ({results.locked_summary.total_locked_percent}% fixed)
                         </p>
                         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                           {results.locked_summary.items.map(l => (
@@ -444,7 +444,7 @@ export default function Formulation() {
                     {/* Sum Check Issue */}
                     {results.infeasibility_diagnosis?.sum_check && !results.infeasibility_diagnosis.sum_check.feasible && (
                       <div style={{ background: 'var(--rose-bg)', border: '1px solid var(--rose-border)', borderRadius: 8, padding: 16 }}>
-                        <p style={{ fontSize: '.8125rem', fontWeight: 600, color: 'var(--rose)', margin: '0 0 4px 0' }}>⚠️ Sum Constraint Issue</p>
+                        <p style={{ fontSize: '.8125rem', fontWeight: 600, color: 'var(--rose)', margin: '0 0 4px 0' }}><Icon name="warning" size={14} style={{ marginRight:4 }}/> Sum Constraint Issue</p>
                         <p style={{ fontSize: '.875rem', color: 'var(--rose)', margin: 0 }}>{results.infeasibility_diagnosis.sum_check.issue}</p>
                       </div>
                     )}
@@ -470,7 +470,7 @@ export default function Formulation() {
                                   <td>{g.nutrient.replace(/_/g,' ').replace(/\b\w/g, l=>l.toUpperCase())}</td>
                                   <td>{parseFloat(g.residual_required).toFixed(4)}</td>
                                   <td>{parseFloat(g.max_achievable).toFixed(4)}</td>
-                                  <td>{g.feasible ? '✅' : '❌'}</td>
+                                  <td>{g.feasible ? <Icon name="check_circle" size={16} color="var(--emerald-border)" /> : <Icon name="cancel" size={16} color="var(--rose)" />}</td>
                                   <td>{!g.feasible ? <span style={{ color: 'var(--red)', fontWeight: 700 }}>{g.gap > 0 ? '+' : ''}{parseFloat(g.gap).toFixed(4)}</span> : 'OK'}</td>
                                 </tr>
                               ))}
@@ -487,7 +487,7 @@ export default function Formulation() {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                           {results.adjustment_suggestions.map((s, i) => (
                             <div key={i} style={{ background: 'var(--blue-bg)', border: '1px solid var(--border-light)', borderRadius: 8, padding: 12, display: 'flex', gap: 12 }}>
-                              <span style={{ fontSize: '1.2rem' }}>💡</span>
+                              <span style={{ fontSize: '1.2rem' }}><Icon name="lightbulb" size={18} color="var(--blue)" /></span>
                               <div>
                                 <p style={{ fontSize: '.875rem', fontWeight: 600, color: 'var(--text-main)', margin: '0 0 4px 0' }}>
                                   {s.action === 'increase_max' ? '↑ Raise max of' : '↓ Lower min of'} <span style={{ fontFamily: 'monospace', background: '#bfdbfe', padding: '2px 4px', borderRadius: 4 }}>{s.ingredient}</span>
@@ -522,7 +522,7 @@ export default function Formulation() {
                             <div key={i.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 8, borderBottom: '1px solid var(--gray-200)' }}>
                               <div>
                                 <span style={{ fontWeight: 600, fontSize: '.9375rem' }}>{i.name}</span>
-                                {i.is_locked && <span className="badge badge-amber" style={{ marginLeft: 8 }}>🔒</span>}
+                                {i.is_locked && <span className="badge badge-amber" style={{ marginLeft: 8 }}><Icon name="lock" size={12} /></span>}
                               </div>
                               <div style={{ textAlign: 'right' }}>
                                 <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>{(i.percentage * 100).toFixed(2)}%</div>
@@ -535,7 +535,7 @@ export default function Formulation() {
 
                       {/* Nutrient Achievement */}
                       <div>
-                        <h4 style={{ fontSize: '.9375rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--text-muted)', marginBottom: 12 }}>✅ All Targets Met</h4>
+                        <h4 style={{ fontSize: '.9375rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.04em', color: 'var(--text-muted)', marginBottom: 12 }}><Icon name="check_circle" size={16} style={{ marginRight:4 }}/> All Targets Met</h4>
                         <div className="table-wrap">
                           <table>
                             <thead>
@@ -552,7 +552,7 @@ export default function Formulation() {
                                   <td style={{ textTransform: 'capitalize' }}>{k.replace(/_/g, ' ')}</td>
                                   <td style={{ fontFamily: 'monospace' }}>{parseFloat(v.required * 100).toFixed(2)}%</td>
                                   <td style={{ fontFamily: 'monospace', color: 'var(--emerald)', fontWeight: 700 }}>{parseFloat(v.achieved * 100).toFixed(2)}%</td>
-                                  <td>✅</td>
+                                  <td><Icon name="check_circle" size={16} color="var(--emerald-border)" /></td>
                                 </tr>
                               ))}
                             </tbody>

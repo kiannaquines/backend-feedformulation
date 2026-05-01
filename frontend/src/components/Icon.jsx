@@ -1,9 +1,9 @@
-import React from 'react';
+import { cn } from '@/lib/utils'
 
 export function Icon({ name, size = 24, style = {}, className = '', color }) {
   return (
     <span 
-      className={`material-symbols-outlined ${className}`}
+      className={cn('material-symbols-outlined', className)}
       style={{
         fontSize: size,
         color: color,
@@ -17,5 +17,6 @@ export function Icon({ name, size = 24, style = {}, className = '', color }) {
     >
       {name}
     </span>
-  );
+  )
 }
+

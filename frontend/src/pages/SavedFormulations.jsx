@@ -34,8 +34,8 @@ export default function SavedFormulations() {
   return (
     <div>
       <ToastContainer/>
-      <div className="page-hero" style={{ marginBottom:32 }}>
-        <div className="container page-hero-inner">
+      <div className="container" style={{ marginBottom: 16 }}>
+        <div className="page-hero-inner">
           <h1><Icon name="bookmark" size={24} style={{ marginRight:10, verticalAlign:'middle' }}/>Saved Formulations</h1>
           <p style={{ opacity:.8 }}>{list.length} saved formula{list.length!==1?'s':''}</p>
         </div>
@@ -80,7 +80,7 @@ export default function SavedFormulations() {
                             <span className="badge badge-blue">{summary.active_ingredients_count} ingredients</span>
                           )}
                           {summary.locked_ingredients_count > 0 && (
-                            <span className="badge badge-amber">🔒 {summary.locked_ingredients_count} locked</span>
+                            <span className="badge badge-amber"><Icon name="lock" size={12} style={{ marginRight:4 }}/> {summary.locked_ingredients_count} locked</span>
                           )}
                         </div>
                       </div>
@@ -113,7 +113,7 @@ export default function SavedFormulations() {
                               {ingList.filter(i=>i.included).map(i => (
                                 <div key={i.name} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'6px 10px', background:'var(--gray-50)', borderRadius:8 }}>
                                   <span style={{ fontSize:'.875rem', fontWeight:500 }}>
-                                    {i.name}{i.is_locked && ' 🔒'}
+                                    {i.name}{i.is_locked && <Icon name="lock" size={12} style={{ marginLeft: 4 }} />}
                                   </span>
                                   <span style={{ fontWeight:600, color:'var(--text-main)', fontSize:'.875rem' }}>
                                     {parseFloat(i.percentage).toFixed(2)}%
@@ -135,7 +135,7 @@ export default function SavedFormulations() {
                                     {k.replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase())}
                                   </span>
                                   <span style={{ fontWeight:700, color:'var(--emerald)', fontSize:'.875rem' }}>
-                                    {parseFloat(v.achieved).toFixed(4)} ✅
+                                    {parseFloat(v.achieved).toFixed(4)} <Icon name="check_circle" size={14} color="var(--emerald-border)" style={{ marginLeft:4 }}/>
                                   </span>
                                 </div>
                               ))}
