@@ -1,43 +1,7 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { Icon } from './Icon'
-import { useState } from 'react'
-
-const NAV = [
-  { to: '/dashboard',            label: 'Dashboard',       icon: 'dashboard' },
-  { to: '/formulation',          label: 'Formulation',     icon: 'science'    },
-  { to: '/ingredients',          label: 'Ingredients',     icon: 'inventory_2'         },
-  { to: '/nutrient-requirements',label: 'Nutrients',       icon: 'checklist'      },
-  { to: '/saved-formulations',   label: 'Saved',           icon: 'bookmark'      },
-]
-
+// Old Navbar removed. This file is now empty and ready for new implementation.
 export default function Navbar() {
-  const { user, logout } = useAuth()
-  const { pathname }     = useLocation()
-  const [open, setOpen]  = useState(false)
-
-  if (!user) return null
-
-  return (
-    <nav className="navbar">
-      <div className="container">
-        <div className="navbar-inner">
-          <Link to="/dashboard" className="navbar-brand">
-            <div className="navbar-logo">
-              <Icon name="eco" size={20} color="#fff" />
-            </div>
-            <span className="navbar-title">FeedForm</span>
-          </Link>
-
-          {/* Desktop nav */}
-          <div className="navbar-nav" style={{ display: 'none' }} id="desktop-nav">
-            {NAV.map(({ to, label, icon: Icon }) => (
-              <Link
-                key={to} to={to}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 6,
-                  padding: '6px 12px', borderRadius: 8,
-                  fontSize: '0.875rem', fontWeight: 500,
+  return null;
+}
                   textDecoration: 'none',
                   color: pathname === to ? 'var(--farm-green-mid)' : 'var(--gray-500)',
                   background: pathname === to ? 'var(--emerald-light)' : 'transparent',

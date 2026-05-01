@@ -22,7 +22,7 @@ export default function App() {
           <Route path="/" element={<Navigate to="/dashboard" replace/>}/>
 
           <Route path="/dashboard" element={
-            <PrivateRoute><SidebarLayout><Dashboard/></SidebarLayout></PrivateRoute>
+            <PrivateRoute><Dashboard/></PrivateRoute>
           }/>
           <Route path="/formulation" element={
             <PrivateRoute><SidebarLayout><Formulation/></SidebarLayout></PrivateRoute>
