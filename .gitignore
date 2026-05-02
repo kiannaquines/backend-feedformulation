@@ -48,6 +48,11 @@ app_database.db
 
 # Logs
 *.log
+
+# Backup files
+*_backup.py
+*.backup
+*.bak
 logs/
 
 # Testing
